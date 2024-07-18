@@ -1,6 +1,22 @@
 const express = require('express');
-const app = express();
+const server = express();
+require('dotenv').config();
+const Port = process.env.PORT;
+const dbConnect = require('./config/database');
+const { createTodo } = require('./routes/createTodo');
 
-app.listen(4000,()=>{
-    console.log("Server is running on port 4000");
-});
+server.use(express.json());
+
+server.listen(Port,()=>{
+    console.log(`Server sucessfully at port ${Port}`)
+})
+
+dbConnect();
+
+// Mount all the routes
+server.use("v1",createTodo)
+
+// Default route
+server.get("/",(req,res)=>{
+    res.send("Home page");
+})
