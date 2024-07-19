@@ -1,22 +1,28 @@
-const express = require('express');
+// Creating server
+const express = require("express");
 const server = express();
-require('dotenv').config();
-const Port = process.env.PORT;
-const dbConnect = require('./config/database');
-const { createTodo } = require('./routes/createTodo');
 
+// Loads all enviroment variables in process.env obejct as properties of the object
+require("dotenv").config();
+const Port = process.env.PORT;
+const dbConnect = require("./config/database");
+const createTodo = require("./routes/createTodo");
+
+// The server will fetch json data and load it in req.body
 server.use(express.json());
 
-server.listen(Port,()=>{
-    console.log(`Server sucessfully at port ${Port}`)
-})
+// Starting the server at PORT
+server.listen(Port, () => {
+  console.log(`Server sucessfully at port ${Port}`);
+});
 
+// Database connection
 dbConnect();
 
 // Mount all the routes
-server.use("v1",createTodo)
+server.use("/v1", createTodo);
 
 // Default route
-server.get("/",(req,res)=>{
-    res.send("Home page");
-})
+server.get("/", (req, res) => {
+  res.send("Home page");
+});
