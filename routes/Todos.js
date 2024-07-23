@@ -7,5 +7,4 @@ router.post("/createTodo",createTodo.createTodo);
 router.get("/getTodo", getTodo.getTodos);
 router.get("/getTodo/:id",getTodo.getTodoById);
 
-
 module.exports = router;
